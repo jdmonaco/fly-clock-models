@@ -9,8 +9,6 @@ import matplotlib.pyplot as plt
 import sklearn.mixture as gmm
 import scipy.stats as st
 import scipy.linalg as la
-import seaborn as sns
-sns.reset_orig()
 
 import roto.axis as ra
 import pouty as pty
@@ -224,7 +222,7 @@ class MixtureModel(FlyAnalysis):
                         'Cells')
         ax = f.add_subplot(111)
 
-        cols = sns.husl_palette(n_colors=self.c.bins, h=0.4, s=0.8, l=0.6)
+        cols = mpl.cm.hsl(np.linspace(0,1,self.c.bins))
 
         for i in range(self.c.bins):
             valid = np.isfinite(pdfs[i])
@@ -448,7 +446,6 @@ class MixtureModel(FlyAnalysis):
         # Create a 2x2 figure showing (raw, normalized) x (joint, conditional)
         #
 
-        # sns.set_context('talk')
         # mpl.rcParams['axes.labelpad'] = 3.3
 
         f = self.figure('timing-distros', clear=True, figsize=figsize,
@@ -482,8 +479,6 @@ class MixtureModel(FlyAnalysis):
                 'viridis', None, r'Log $\Delta{t_2}$')
         plot_distro(axdj, Jdata, r'Normalized, P($\Delta{t_1},\Delta{t_2}$)',
                 dlim, 'viridis', None, r'Normalized Log $\Delta{t_2}$')
-
-        sns.reset_orig()
 
     @step
     def fit_rate_distro(self, pad=0.1, nevals=128, figsize=(5,4)):

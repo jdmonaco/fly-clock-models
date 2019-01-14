@@ -7,7 +7,6 @@ from os.path import join as opj
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 from roto.dicts import merge_two_dicts
 
@@ -66,9 +65,6 @@ rc_png = {
 
 mpl.rc_file_defaults()
 mpl.rcParams.update(rc_paper)
-
-# Seaborn settings
-sns.set_palette('colorblind', color_codes=True)
 
 # Color constants
 nonsigcolor = (0.88470588, 0.55803921, 0.3)  # lightened colorblind 'r'

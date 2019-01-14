@@ -8,8 +8,6 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import scipy.interpolate as sit
 import scipy.stats as st
-import seaborn as sns
-sns.reset_orig()
 
 import roto.axis as ra
 
@@ -147,7 +145,7 @@ class PointProcessModel(FlyAnalysis):
                     f'{self.c.phase.title()} Cells')
         ax = f.add_subplot(111)
 
-        cols = sns.husl_palette(n_colors=self.c.bins, h=0.4, s=0.8, l=0.6)
+        cols = mpl.cm.hsl(np.linspace(0,1,self.c.bins))
 
         for i in range(self.c.bins):
             valid = np.isfinite(pdfs[i])
@@ -282,7 +280,7 @@ class PointProcessModel(FlyAnalysis):
         plot_cond(axdc, self.read_array('P_grand'), 'Data')
         plot_cond(axc, cond, 'Model', show_xlabel=True)
 
-        cols = sns.color_palette('Dark2', n_colors=3)
+        cols = mpl.cm.Dark2(np.linspace(0,1,3))
 
         def plot_marg(ax, marg, label, col, ls, m):
             ax.plot(x, marg, color=col, ls=ls, alpha=0.9, marker=m,
@@ -402,7 +400,7 @@ class PointProcessModel(FlyAnalysis):
         plot_cond_or_marg(axc, cond, r'Synthetic P($d_2|d_1$)', xlabel=False)
         plot_cond_or_marg(axj, joint, r'Synthetic P($d_1,d_2$)')
 
-        cols = sns.color_palette('Dark2', n_colors=3)
+        cols = mpl.cm.Dark2(np.linspace(0,1,3))
 
         def plot_sample_marg(ax, data, x, marg):
             edges = np.linspace(self.c.dmin, self.c.dmax, ninterps + 1)

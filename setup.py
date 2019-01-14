@@ -1,4 +1,4 @@
-"""Setup installation file for Flyback"""
+"""Setup installation file for Flymodel"""
 
 from setuptools import setup
 from codecs import open
@@ -9,11 +9,11 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='flyback',
-    version='0.1.0',
-    description='Flyback',
+    name='flymodel',
+    version='0.0.1',
+    description='Flymodel',
     long_description=long_description,
-    url='https://github.com/jdmonaco/flyback',
+    url='https://github.com/jdmonaco/monacolab/tree/master/flymodel',
     author='Joseph Monaco',
     author_email='jmonaco@jhu.edu',
     license='MIT',
@@ -24,7 +24,7 @@ setup(
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4'
+        'Programming Language :: Python :: 3.6'
     ],
     keywords='model simulation neuroscience',
-    packages=['flyback'])
+    packages=['flymodel'])

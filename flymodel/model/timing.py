@@ -4,8 +4,6 @@ Temporal coding differences due to modulation of intrinsic neuronla properties.
 
 from brian2 import *
 import matplotlib as mpl
-import seaborn as sns
-sns.reset_orig()
 
 from roto.arrays import discretize
 import roto.axis as ra
@@ -132,7 +130,7 @@ class SCNTimingModel(FlySimulation):
         axn = f.add_subplot(235, sharey=axd, sharex=axd)
         axo = f.add_subplot(236, sharey=axe, sharex=axe)
 
-        cols = sns.color_palette('GnBu_d', n_colors=N)
+        cols = mpl.cm.GnBu(np.linspace(0,1,N))
 
         def plot_reversals(ax, xlabel=True):
             kwds = dict(c=cols)
@@ -457,7 +455,7 @@ class SCNTimingModel(FlySimulation):
         labels = self.c.labels
         N_cells = len(labels)
         nx = np.arange(N_cells)
-        cols = sns.color_palette('Dark2', n_colors=N_cells)
+        cols = mpl.cm.Dark2(np.linspace(0,1,N_cells))
 
         f = self.figure('paper', clear=True, figsize=figsize,
                 title=f'Draft Figure for ATPase+BK Model: {self.c.dur:.1f}-s '
@@ -670,5 +668,3 @@ class SCNTimingModel(FlySimulation):
             ax.set_xticklabels(labels)
             ax2.legend(h1 + h2, l1 + l2, loc='lower left')
         plot_cv(ax_cv)
-
-        sns.reset_orig()
