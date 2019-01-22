@@ -1,0 +1,88 @@
+#!/bin/bash
+set -ue
+
+# Runfile script
+
+USAGE="Usage: run -e|vim|mvim|install|uninstall|etc..."
+
+if (( $# )); then
+    runcmd="$1"
+    shift
+else
+    echo "$USAGE"
+    exit 1
+fi
+
+
+# Add run commands as switch cases below. Do not make edits
+# outside of case blocks. Note: Optional args are available
+# as "${@}". If used, consider the first line in the block
+# as a usage statement.
+
+
+case "$runcmd" in
+
+vim)
+    if [[ -f Session.vim ]]; then
+        vim -S Session.vim
+    else
+        vim flymodel
+    fi
+    ;;
+
+mvim)
+    if [[ -f Session.vim ]]; then
+        mvim -S Session.vim &>/dev/null
+    else
+        mvim flymodel &>/dev/null
+    fi
+    ;;
+
+install) pip install --no-deps -e "/Users/joe/code/flymodel" ;;
+
+uninstall) pip uninstall -y flymodel ;;
+
+tmux) tmux new-session -A -s flymodel ;;
+
+exportenv)
+    (
+    source activate flymodel && \
+        conda env export -f environment.yml && \
+        git add environment.yml && \
+        git diff --cached
+    )
+    ;;
+
+ipython)
+    (
+    source activate flymodel && \
+        ipython --profile=flymodel
+    )
+    ;;
+
+cluster)
+    (
+    source activate flymodel && \
+        ipcluster start --profile=flymodel
+    )
+    ;;
+
+notebook)
+    (
+    source activate flymodel && \
+        jupyter notebook --notebook-dir="/Users/joe/projects/flymodel/notebooks"
+    ) &
+    ;;
+
+killnb) pkill -f jupyter ;;
+
+finder) open . -a finder ;;
+
+tests) py.test -q tests ;;
+
+*)
+    echo $USAGE
+    exit 1
+    ;;
+
+esac
