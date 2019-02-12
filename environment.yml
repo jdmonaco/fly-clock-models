@@ -152,7 +152,6 @@ dependencies:
   - zope=1.0=py36_1
   - zope.interface=4.6.0=py36h1de35cc_0
   - pip:
-    - flyback==0.1.0
     - flymodel==0.0.1
     - pouty==0.0.1
     - roto==0.0.1
