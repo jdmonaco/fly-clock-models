@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -ue
 
 # Runfile script
@@ -20,6 +20,19 @@ fi
 # as a usage statement.
 
 
+function __conda_check {
+    if [[ "${CONDA_DEFAULT_ENV+x}" ]]; then
+        if [[ "$CONDA_DEFAULT_ENV" != flymodel ]]; then
+            echo "Wrong environment ($CONDA_DEFAULT_ENV). Please switch to the"
+            echo "'flymodel' environment with 'source activate flymodel'."
+            exit 1
+        fi
+    else
+        echo "Please run 'source activate flymodel' first."
+        exit 2
+    fi
+}
+
 case "$runcmd" in
 
 vim)
@@ -38,40 +51,33 @@ mvim)
     fi
     ;;
 
-install) pip install --no-deps -e "/Users/joe/code/flymodel" ;;
+install) pip install --no-deps -e "$HOME/code/flymodel" ;;
 
 uninstall) pip uninstall -y flymodel ;;
 
 tmux) tmux new-session -A -s flymodel ;;
 
 exportenv)
-    (
-    source activate flymodel && \
-        conda env export -f environment.yml && \
+    __conda_check
+    conda env export -f environment.yml && \
         git add environment.yml && \
         git diff --cached
-    )
     ;;
 
 ipython)
-    (
-    source activate flymodel && \
-        ipython --profile=flymodel
-    )
+    __conda_check
+    ipython --profile=flymodel
     ;;
 
 cluster)
-    (
-    source activate flymodel && \
-        ipcluster start --profile=flymodel
-    )
+    __conda_check
+    ipcluster start --profile=flymodel
     ;;
 
 notebook)
-    (
-    source activate flymodel && \
-        jupyter notebook --notebook-dir="/Users/joe/projects/flymodel/notebooks"
-    ) &
+    __conda_check
+    ipcluster start --profile=flymodel
+    jupyter notebook --notebook-dir="$HOME/projects/flymodel/notebooks" &
     ;;
 
 killnb) pkill -f jupyter ;;
